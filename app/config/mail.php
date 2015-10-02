@@ -15,7 +15,7 @@ return array(
 	|
 	*/
 
-	'driver' => 'smtp',
+	'driver' => 'mail',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ return array(
 	|
 	*/
 
-	'host' => 'smtp.gmail.com',
+	'host' => '27colours.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -41,7 +41,7 @@ return array(
 	|
 	*/
 
-	'port' => 587,
+	'port' => 465,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array( 'address' => 'samizares@27colours.com', 'name' => '27cols' ),
+	'from' => array( 'address' => 'admin@27colours.com', 'name' => '27colours' ),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return array(
 	|
 	*/
 
-	'username' =>'samizares@gmail.com',
+	'username' =>'admin@27colours.com',
 	/*
 	|--------------------------------------------------------------------------
 	| SMTP Server Password
@@ -92,7 +92,7 @@ return array(
 	|
 	*/
 
-	'password' => 'newjesus4ever',
+	'password' => 'Talents27',
 
 	/*
 	|--------------------------------------------------------------------------

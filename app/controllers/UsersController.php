@@ -10,10 +10,6 @@
 class UsersController extends Controller
 {
 
-    //public function __construct() {
-      //  parent::__construct();
-        //$this->before('csrf', array('on'=>'post'));
-    //}
     /**
      * Displays the form for account creation
      *
@@ -54,7 +50,7 @@ class UsersController extends Controller
         } else {
             $error = $user->errors()->all(':message');
 
-            return Redirect::action('UsersController@postCreate')
+            return Redirect::action('UsersController@getCreate')
                 ->withInput(Input::except('password'))
                 ->with('error', $error);
         }
@@ -85,7 +81,7 @@ class UsersController extends Controller
     {
         $repo = App::make('UserRepository');
         $input = Input::all();
-       // $userame=Input::get('username');
+       // $username=Input::get('username');
         
 
         if ($repo->login($input)) {
@@ -234,6 +230,7 @@ class UsersController extends Controller
     if ($uid == 0) return Redirect::to('/')->with('message', 'There was an error');
 
     $me = $facebook->api('/me');
+    $pic=$facebookService->request( ('/me/picture?type=large' ), true );
     //return  Redirect::to('/')->with('error', 'this user'. $me['name']. 'got here!!!');
     //$pic ='https://graph.facebook.com/'.$me['id'].'/picture?type=large';
 

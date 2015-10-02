@@ -44,14 +44,14 @@
                 <h2>Add Your Songs</h2>
                               <h6 class="red">Maximum 10 Uploads (Add Your Best)</h6>           
                         <hr> 
-                            @if (Session::get('error'))
+                            @if (Session::get('errors'))
 
-                <div class="alert alert-error alert-danger"><a name="error">{{{ Session::get('error') }}}</a>
+                <div class="alert alert-error alert-danger"><a name="error">{{{ Session::get('errors') }}}</a>
                 </div>
                 @endif
 
-                @if (Session::get('notice'))
-             <div class="alert"><a name="notice">{{{ Session::get('notice') }}}</a>
+                @if (Session::get('notices'))
+             <div class="alert"><a name="notice">{{{ Session::get('notices') }}}</a>
              </div>
                @endif
 
@@ -95,7 +95,7 @@
                             <div class="upld-imgbdrght col-sm-6">
                                 <label for="upld-img" class="control-label">Album Art (Optional)</label>
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
-                                    <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width:200px; height:200px;">{{HTML::image('img/user.jpg','Album Art')}}</div>
+                                    <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width:200px; height:200px;">{{ HTML::image('img/user.jpg','Album Art')}}</div>
                                     <div><span class="btn btn-u btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span>
                                          {{Form::file('song_image')}}
                                         </span><a href="#" class="btn btn-u fileinput-exists" data-dismiss="fileinput">Remove</a>
@@ -113,8 +113,13 @@
                                         </li>
                                     </ul>
                                     <ul class="list-unstyled select">
-                                        <li><h3>Genre</h3></li>
-                                        <li>{{Form::select('genre', ['Genre','Highlife','Hip-Hop','RnB','Afrobeat'], 0, ['class'=>'form-control']) }} 
+                                        <select name="genre">
+                                       <option value="rap">Hip hop</option>
+                                        <option value="rock">Rock</option>
+                                         <option value="country">Country</option>
+                                         <option value="soul">Soul</option>
+                                         <option value="reggae">Reggae</option>
+                                        </select> 
                                             </li>
                                     </ul>
                                 </div>

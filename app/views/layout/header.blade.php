@@ -1,45 +1,63 @@
-@section('header')
-<header id="myCarousel" class="carousel slide" data-ride="carousel">
-        <div class="container jumbotron">
-                        <!-- Indicators -->
-            <ol class="carousel-indicators">
-                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                <li data-target="#myCarousel" data-slide-to="1"></li>
-                <li data-target="#myCarousel" data-slide-to="2"></li>
-            </ol>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    @yield('title')
+    <!-- seo -->
+     <meta name="description" content="@yield('description')">
+    <meta name="keywords" content="singing, photoshoot,modelling,talent search">
+    <meta name="author" content="curiouzmindTech">
+    <!-- core css -->
+    <link rel="stylesheet" href="{{asset('css/bootstrap/bootstrap.css')}}">
+    <!-- plugins css -->
+    
+    <meta property="og:title" content="@yield('title')"/>
+    <meta property="og:description" content="@yield('description')" />
+    <meta property="og:image" content="http://27colours.com/img/logo.png"/>
+    
+    <link rel="stylesheet" href="{{asset('plugins/owl-carousel/owl.carousel.css')}}">
+    <link rel="stylesheet" href="{{asset('plugins/AudioPlayer/css/audioplayer.css')}}">
+    <link rel="stylesheet" href="{{asset('plugins/jasny-bootstrap/css/jasny-bootstrap.min.css')}}"> 
+    <link rel="stylesheet" href="{{asset('plugins/videoplayer/video.css')}}"> 
+    <link rel="stylesheet" href="{{asset('js/jcrop/jquery.Jcrop.min.css')}}" type="text/css" media="screen">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/themes/jackedup.css')}}" media="screen"/> 
+    <link rel="stylesheet" type="text/css" href="{{asset('css/selectize.css')}}"/>  
+    
 
-            <!-- Wrapper for Slides -->
-            <div class="carousel-inner" role="listbox">
-                <div class="item active">
-                    <!-- Set the first background image using inline CSS below. -->
-                    <img class="center-block" src="img/bg1.jpg" alt="BG Image 1">
-                    <div class="carousel-caption">
-                        <h2>27 Colours Image</h2>
-                    </div>
-                </div>
-                <div class="item">
-                    <!-- Set the first background image using inline CSS below. -->
-                    <img class="center-block" src="img/img2.jpg" alt="BG Image 1">
-                    <div class="carousel-caption">
-                        <h2>27 Colours Video</h2>
-                    </div>
-                </div>
-                <div class="item">
-                    <!-- Set the first background image using inline CSS below. -->
-                    <img class="center-block" src="img/bg1.jpg" alt="BG Image 1">
-                    <div class="carousel-caption">
-                        <h2>27 Colours Audio</h2>
-                    </div>
-                </div>
-            </div>
+    <!-- custom global css -->
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
+    <link rel="stylesheet" href="{{asset('plugins/font-awesome-4.1.0/css/font-awesome.css')}}">
+    <!-- GOOGLE FONTS -->
+    <link href='http://fonts.googleapis.com/css?family=Dosis:500,300,700,400' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{{asset('js/jcrop/jquery.Jcrop.min.css')}}">
 
-            <!-- Controls -->
-            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-                <span class="icon-prev"></span>
-            </a>
-            <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                <span class="icon-next"></span>
-            </a>
-        </div>
-    </header>
-@stop
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <style type="text/css">
+#audio-preview {
+  background: #ffffff;
+  width: auto;
+  padding: 20px;
+  display: inline-block;
+}
+
+#audio-upload {
+  cursor: pointer;
+  background-color: #bdc3c7;
+  color: #ecf0f1;
+  padding: 20px;
+  font-size: 20px;
+  text-transform: uppercase;
+}
+</style>
+    
+ 
+</head>
+
+        
