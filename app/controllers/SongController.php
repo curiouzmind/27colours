@@ -1,8 +1,6 @@
 <?php
 class SongController extends BaseController
 {
-
-
     public function getShow(Song $song)
     {
         $id= $song->id;
@@ -11,40 +9,53 @@ class SongController extends BaseController
 
          return View::make('song.single')
         ->with('song',$song)
-        ->with('genre', $genre)
+         ->with('genre', $genre)
         ->with('reSongs',$reSongs);
-       
     }
-    
+//  desktop upload page
     public function getUpload()
     {
     if (Auth::check()) {
 
-     $user = Auth::user();      
+     $user = Auth::user();
      $s_count= $user->songs()->count();
      if ($s_count < 10 ) {
         return View::make('song.upload');
-       
             }
             else {
                 return View::make('notice');
             }
         }
-
          else {
-            return Redirect::to('/profile/#error')->with('error', 'Please Login/ Signup to upload');
+            return Redirect::to('/profile/#error')->with('error', 'Please Login / SignUp to upload');
         }
-
      }
-      public function getUpload2()
+//    soundcloud upload page
+    public function getUploadLink()
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+            $s_count= $user->songs()->count();
+            if ($s_count < 10 ) {
+                return View::make('song.upload_track_link');
+            }
+            else {
+                return View::make('notice');
+            }
+        }
+        else {
+            return Redirect::to('/profile/#error')->with('error', 'Please Login / SignUp to upload');
+        }
+    }
+    public function getUpload2()
     {
     if (Auth::check()) {
 
-     $user = Auth::user();      
+     $user = Auth::user();
      $s_count= $user->songs()->count();
      if ($s_count < 10 ) {
         return View::make('song.song-upload');
-       
+
             }
             else {
                 return View::make('notice');
@@ -74,7 +85,6 @@ class SongController extends BaseController
        $validator = Validator::make($song, $rules);
         if ($validator->passes())
         {
-        
             $song =new Song;
             $soundcloud = Input::get('soundcloud');
             $mus= $song->getSoundcloud($soundcloud);
@@ -94,24 +104,24 @@ class SongController extends BaseController
 
                 }
                 if (! isset($hold) || ! isset($mus) )
-                    { 
+                    {
                  return Redirect::to('/song/upload')
                 ->with('errors', 'Upload Song directly or Supply your soundcloud link');
                     }
-                
+
 
                 $song->user()->associate(Auth::user());
-                $song->save();   
+                $song->save();
 
                 return View::make('song.last-upload')
                  ->with('song', $song)
                  ->with('notices', 'New song added!!! Complete the remaining details below');
             }
-            
+
          return Redirect::to('/song/upload')
         ->with('errors', $validator->messages())
         ->withInput(Input::except('song'));
-        
+
 
     }
 
@@ -124,8 +134,8 @@ class SongController extends BaseController
             'image' => Input::file('image'),
             'song' =>Input::file('song'),
             'soundcloud' => Input::get('soundcloud'),
-            
-            
+
+
         ];
 
         $rules = [
@@ -159,7 +169,7 @@ class SongController extends BaseController
             $hold = 'img/songs/'.$name;
             $song->song = $hold;
             }
-            	   
+
             $youtube = Input::get('youtube');
             if(isset($youtube))
             {
@@ -179,20 +189,20 @@ class SongController extends BaseController
             $upload_success =$imag->move($desPath, $name);
             $song->image='img/songs/images/'.$name;
             }
-            
+
             if (! isset($music) && ! isset($mus) )
-                    { 
+                    {
                  return Redirect::to('/song/upload')
                 ->with('errors', 'Upload Song directly OR Supply your soundcloud link');
                     }
 
             $song->user()->associate(Auth::user());
-            $song->save(); 
+            $song->save();
 
             return Redirect::to('/profile')
             ->with('notices', 'New song added!!!');
-       
-  
+
+
         }
 
         return Redirect::to('/song/upload')
@@ -210,8 +220,8 @@ class SongController extends BaseController
             'image' => Input::file('image'),
             'song' =>Input::file('song'),
             'soundcloud' => Input::get('soundcloud'),
-            
-            
+
+
         ];
 
         $rules = [
@@ -245,7 +255,7 @@ class SongController extends BaseController
             $hold = 'img/songs/'.$name;
             $song->song = $hold;
             }
-            	   
+
             $youtube = Input::get('youtube');
             if(isset($youtube))
             {
@@ -265,27 +275,27 @@ class SongController extends BaseController
             $upload_success =$imag->move($desPath, $name);
             $song->image='img/songs/images/'.$name;
             }
-            
+
             if (! isset($music) && ! isset($mus) )
-                    { 
+                    {
                  return Redirect::to('/song/upload2')
                 ->with('errors', 'Upload Song directly OR Supply your soundcloud link');
                     }
 
             $song->user()->associate(Auth::user());
-            $song->save(); 
+            $song->save();
 
             return Redirect::to('/profile')
             ->with('notices', 'New song added!!!');
-       
-  
+
+
         }
 
         return Redirect::to('/song/upload2')
         ->with('errors', $validator->messages())
         ->withInput(Input::only('title','description','youtube','soundcloud','genre'));
      }
-     
+
      public function postCreate3()
      {
      	$caption=Input::get('caption');
@@ -302,7 +312,7 @@ class SongController extends BaseController
 			return Response::json('error', 400);
 		}
      }
-     
+
 
      public function getEdit(Song $song)
      {
@@ -318,7 +328,7 @@ class SongController extends BaseController
             'title' => Input::get('title'),
             'description' => Input::get('description'),
             'image' => Input::file('image'),
-            
+
         ];
 
         $rules = [
@@ -338,7 +348,7 @@ class SongController extends BaseController
             $song->description = Input::get('description');
             $song->genre =Input::get('genre');
 
-        
+
             $youtube = Input::get('youtube');
             $vid= $song->getYoutube($youtube);
             $song->youtube= $vid;
@@ -348,13 +358,13 @@ class SongController extends BaseController
             $tags->type = 'Song';
             $song->tags()->save($tags);
 
-        
+
             $imag= Input::file('image');
 
             $filename = str_random(12);
             $desPath= public_path('img/songs/images/');
             $upload_success =$imag->move($desPath, $filename);
-            $song->image='img/songs/images/'.$filename; 
+            $song->image='img/songs/images/'.$filename;
             $song->save();
 
             return Redirect::to('/profile')
@@ -371,7 +381,7 @@ class SongController extends BaseController
 
      public function getDelete(Song $song)
      {
-     
+
         $user = Auth::user();
         return View::make('profile.songs.delete')
         ->with('song', $song)
@@ -382,7 +392,7 @@ class SongController extends BaseController
      public function postDelete()
      {
        $song=Song::findorfail(Input::get('id'));
-         
+
         if ($song) {
             File::delete('img/songs/'.$song->song);
             File::delete('img/songs/images'.$song->image);
@@ -395,7 +405,7 @@ class SongController extends BaseController
          return Redirect::to('/profile')
         ->with('errors', 'Error deleting song');
 
-      
+
   }
 
 
@@ -414,19 +424,19 @@ class SongController extends BaseController
 	 ->orderBy('title','asc')
 	 ->take(5)
 	 ->get(['id', 'title', 'image']);
-	 
+
 	 $data2 = DB::table('videos')
 	 ->where('title','like','%'.$query.'%')
 	 ->orderBy('title','asc')
 	 ->take(5)
 	 ->get(['id', 'title', 'image']);
-	 
+
 	 $data3 = DB::table('galleries')
 	 ->where('caption','like','%'.$query.'%')
 	 ->orderBy('caption','asc')
 	 ->take(5)
 	 ->get(['id', 'caption', 'image']);
-	 
+
 	 $data3 = DB::table('galleries')
 	 ->where('caption','like','%'.$query.'%')
 	 ->orderBy('caption','asc')
@@ -435,7 +445,7 @@ class SongController extends BaseController
 
 	 // Return JSON-encoded list of items as a response to the request
  	return Response::json(['data' => $data]);
- 	
+
  }
 
 
@@ -456,17 +466,17 @@ class SongController extends BaseController
         $extension = $file->getClientOriginalExtension();
         $name = $fileName.'.'.$extension;
 
-     
+
         $desPath=public_path('img/songs/');
 
         $song->image = 'img/songs/'.$name;
         $song->user()->associate(Auth::user());
         $song->save();
         $file->move($desPath,$name);
-        
+
          return Redirect::to('/profile')
          ->with('noticeg', 'New Song added!!!');
     }
 
- 
+
 }

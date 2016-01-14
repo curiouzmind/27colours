@@ -1,118 +1,213 @@
 @extends('layout.master')
-     @section('title')
-        <title>Music | 27Colours</title>
-     @stop
-     @section('css-links')
-        
-    @stop
-    @section('menu')
-       <!-- menu navigation -->
-                <div class="collapse navbar-collapse col-md-8" id="navbar-collapse-1">                    
-                    
-                    <!-- navigation -->
-                    <ul class="nav navbar-nav navbar-left">
-                        <li>
-                            <a data-ajax="false" href="/">
-                                <i class="fa fa-home fa-fw fa-2x"></i>
-                                <span class="sr-only">(Current)</span>
-                            </a>
-                        </li>
-                        <li class="active"><a data-ajax="false" href="/song"><i class=""></i> Music</a></li>
-                        <li><a data-ajax="false" href="/videos"><i class=""></i> Videos</a></li>
-                        <li><a data-ajax="false" href="/galleries"><i class=""></i> Gallery</a></li>
-                        <li><a data-ajax="false" href="/talents"><i class=""></i> Talents</a></li>
-                    </ul>
-                </div> <!-- ./ menu navigation -->
-    @stop
-    @section('content')
-    <!-- breadcrumbs -->
-    <div class="breadcrumb">
-     <div class="overlay-img">
-      <div class="row padding-5">
-       <div class="container">
-        <div class="btn-group pull-left margin-25-0">
-            <a data-ajax="false" href="/" class="btn btn-default"><i class="fa fa-home"></i></a>
-            <a href="/songs" class="btn btn-danger-reverse">Music <i class="fa fa-music"></i></a>
+@section('title')
+    <title>{{$song->title}} - {{$song->user->username}} | 27Colours</title>
+@stop
+@section('css-links')
+    <link rel="stylesheet" href="{{asset('/plugins/soundmanager/css/bar-ui.css')}}">
+    <link rel="stylesheet" href="{{asset('/plugins/soundmanager/css/demo.css')}}">
+@stop
+@section('header')
+    <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+    <script type="text/javascript">stLight.options({publisher: "462b8e41-098f-4d6e-af7f-52472fed576a", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
+@stop
+@section('content')
+            <!-- page header -->
+    <div class="page-banner well">
+        <div class="overlay-bg text-center">
+            <div class="container">
+                <div class="thumbnail center-block" style="width: 100px; height: 100px;border-radius:50%;overflow: hidden;">
+                    @if($song->image!=='')
+                        {{HTML::image($song->image, $song->title,array('class'=>'img-responsive center-block','width' => 'auto', 'height' => '100%'))}}
+                    @else
+                        {{HTML::image('img/music-avatar-2.PNG','thumbnail',array('width' => '100px', 'height' => '100px', 'style'=>'padding:10px;'))}}
+                    @endif
+                </div>
+                <h2 class="text-uppercase bold"><i class="fa fa-music fa-fw"></i> {{$song->title}}</h2>
+                <h4 class="text-capitalize"><i class="fa fa-user fa-fw"></i> {{$song->user->username}}</h4>
+            </div>
         </div>
-       </div>
-      </div>
-     </div>
     </div>
-    <!-- posts -->  
-    <div id="section-3a">
-        <div class="container padding-2px">
-          <div class="row">
-              <div class="col-md-8 col-xs-12" style="padding:0;">
-                   <!-- post-content -->
-                   <div class="post-content">
-                       <div class="">
-                            @if( isset($song->soundcloud))
-                            <div class="">
-                                <iframe width="100%" height="100px" scrolling="no" frameborder="no"
-                                 src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/{{$song->soundcloud}}&amp;color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false">
-                                </iframe>
-                            </div>
-                            @elseif ( isset($song->song))
-                            <div id="wrapper">
-                                <audio class="audioplayer" preload="auto" controls style="width: 100%; height:50px; margin-top:5px;">
-                                    <source src="{{asset($song->song)}}" type="audio/mp3"> <!-- .mp3 -->
-                                </audio>                        
-                            </div>
-                                @else
-                                <p class="text-center alert alert-info"  role="alert"> You added an invalid Audio track/ soundcloud link!!! </p>
-                                @endif
-                       </div>
-                       <div class="post-details">
-                          <div class="post-page-title">
-                            <h2 class="title" style="margin: 5px 0;">{{$song->title}}</h2>
-                          </div>
-                          <div class="">
-                            @if($song->image!=='')
-                               {{HTML::image($song->image, $song->title,array('class'=>'img-responsive pull-left center-block','width' => '48px', 'height' => '48px'))}}
-                               @else
-                                {{HTML::image('img/music-avatar-2.jpg','thumbnail',array('width' => '48px', 'height' => '48px','class'=>'pull-left'))}}
-                               @endif
-                                              <div class="post-thumb-text">
-                                                <h2 class="post-title"><i class="fa fa-music fa-fw"></i> {{$song->title}}</h2>
-                                                <p class="post-uploader"><i class="fa fa-user fa-fw"></i> {{$song->user->username}}</p>  
-                                                
-                                                    <div class="dropdown ui-li-aside text-right"><a id="dLabel" data-target="#" class="btn" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="">Share</span> <i class="fa fa-share-alt fa-lg"></i></a>
-                                                    <ul class="dropdown-menu pull-right list-inline" aria-labelledby="dLabel" style="padding: 10px 0 !important;">
-                                                         <li><span class='st_facebook_large' displayText='Facebook'></span></li>
-<li><span class='st_twitter_large' displayText='Tweet'></span></li>
-<li class="hidden"><span class='st_whatsapp_large' displayText='WhatsApp'></span></li>
-<li class="hidden"><span class='st_instagram_large' displayText='Instagram Badge' st_username='27colours'></span></li>
-<li><span class='st_plusone_large' displayText='Google +1'></span></li>
-  </ul>
-</div>
-                              </div>                     
-                                              </div>
-                       </div>
-                   </div>
-                   <!-- Post AD -->
-                   <div class="post-ad hidden">
-                       
-                   </div>
-                   <!-- related posts -->
-                   <div class="related-posts">
-                       <h3 class="text-left post-section-title"><span>Related Songs</span></h3>
-                        <div id="owl-demo" class="owl-carousel"> 
-                            
+    <!-- posts -->
+    <div class="">
+        {{--categories nav-tabs bar --}}
+        <div class="row categories-bar well">
+          <div class="col-md-12">
+            <div class="container">
+                <ul class="list-inline pull-right m5">
+                    <li>
+                        <a href="{{asset($song->song)}}" download="download" title="Download &quot;{{$song->title}}&quot;"
+                           class="btn btn-default text-capitalize"><i class="fa fa-download"></i> Download this track</a>
+                    </li>
+                    <li>
+                        <a data-placement="bottom" data-toggle="popover" data-container="body" data-placement="left" type="button"
+                           data-html="true" href="#">Share <i class="fa fa-share-alt"></i>
+                        </a>
+                        <div id="popover-content" class="hide">
+                            <span class='st_facebook_large' displayText='Facebook'></span>
+                            <span class='st_twitter_large' displayText='Tweet'></span>
+                            <span class='st_googleplus_large' displayText='Google +'></span>
                         </div>
-                    </div>
-                   <!-- comments section -->
-                   <div class="post-comments">
-                        @include('discomment')
-                   </div>
-              </div>
-              <div class="col-md-4 col-xs-12 sidebar">
-                  @include('song.song-sidebar')
-              </div>
+                    </li>
+                </ul>
+            </div>
           </div>
         </div>
-    </div>     
+        <div class="container">
+            <div class="row">
+                {{--player--}}
+                <div class="col-md-12">
+                    @if( isset($song->soundcloud))
+                        <div class="">
+                            <iframe width="100%" height="100px" scrolling="no" frameborder="no"
+                                    src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/{{$song->soundcloud}}&amp;color=ff5500&amp;
+                                    auto_play=false&amp;hide_related=true&amp;show_comments=false&amp;show_user=true&amp;show_reposts=false">
+                            </iframe>
+                        </div>
+                    @elseif ( isset($song->song))
+                        <div class="sm2-bar-ui compact full-width playlist-open">
+                            <div class="bd sm2-main-controls">
+                                <div class="sm2-inline-texture"></div>
+                                <div class="sm2-inline-gradient"></div>
+                                <div class="sm2-inline-element sm2-button-element">
+                                    <div class="sm2-button-bd">
+                                        <a href="#play" class="sm2-inline-button play-pause">Play / pause</a>
+                                    </div>
+                                </div>
+                                <div class="sm2-inline-element sm2-inline-status">
+                                    <div class="sm2-playlist">
+                                        <div class="sm2-playlist-target">
+                                            <!-- playlist <ul> + <li> markup will be injected here -->
+                                            <!-- if you want default / non-JS content, you can put that here. -->
+                                            <noscript><p>JavaScript is required.</p></noscript>
+                                        </div>
+                                    </div>
+                                    <div class="sm2-progress">
+                                        <div class="sm2-row">
+                                            <div class="sm2-inline-time">0:00</div>
+                                            <div class="sm2-progress-bd">
+                                                <div class="sm2-progress-track">
+                                                    <div class="sm2-progress-bar"></div>
+                                                    <div class="sm2-progress-ball"><div class="icon-overlay"></div></div>
+                                                </div>
+                                            </div>
+                                            <div class="sm2-inline-duration">0:00</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sm2-inline-element sm2-button-element sm2-volume">
+                                    <div class="sm2-button-bd">
+                                        <span class="sm2-inline-button sm2-volume-control volume-shade"></span>
+                                        <a href="#volume" class="sm2-inline-button sm2-volume-control">volume</a>
+                                    </div>
+                                </div>
+                                <div class="sm2-inline-element sm2-button-element">
+                                    <div class="sm2-button-bd">
+                                        <a href="#repeat" title="Repeat track" class="sm2-inline-button repeat">&infin; repeat</a>
+                                    </div>
+                                </div>
+                                <div class="sm2-inline-element sm2-button-element sm2-menu">
+                                    <div class="sm2-button-bd">
+                                        <a href="#menu" class="sm2-inline-button menu">menu</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bd sm2-playlist-drawer sm2-element">
+                                <div class="sm2-inline-texture">
+                                    <div class="sm2-box-shadow"></div>
+                                </div>
+                                <!-- playlist content is mirrored here -->
+                                <div class="sm2-playlist-wrapper">
+                                    <ul class="sm2-playlist-bd">
+                                        <!-- item with "download" link -->
+                                        <li>
+                                            <div class="sm2-row">
+                                                <div class="sm2-col sm2-wide">
+                                                    <a class="text-capitalize" href="{{asset($song->song)}}"><b>{{$song->title}}</b> - {{$song->user->username}}
+                                                        <span class="label">{{$song->genre}}</span></a>
+                                                </div>
+                                                <div class="sm2-col">
+                                                    <a href="{{asset($song->song)}}" download="download" title="Download &quot;{{$song->title}}&quot;"
+                                                       class="sm2-icon sm2-music sm2-exclude">Download this track</a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    @else
+                        <p class="text-center alert alert-info"  role="alert"> Oops! The track seems to be invalid. </p>
+                    @endif
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-8">
+                    {{--related tracks--}}
+                    <h1 class="related-title">Related Tracks</h1>
+                    <hr>
+                    <div class="owl-carousel">
+                        @foreach($reSongs as $song)
+                            <div class="item grid-thumbs">
+                                <div class="thumbnail">
+                                    @if($song->image!=='')
+                                        {{HTML::image($song->image, $song->title,array('class'=>'img-responsive group list-group-image'))}}
+                                    @else
+                                        {{HTML::image('img/music-avatar-2.PNG','thumbnail',array('class'=>'group list-group-image','style'=>'padding:10px;'))}}
+                                    @endif
+                                    <div class="caption">
+                                        <h4 class="upload-title group inner list-group-item-heading text-uppercase">
+                                            <i class="fa fa-music fa-fw"></i>
+                                            <a class="" href="{{ action('SongController@getShow', array('id'=> $song->id))}}">{{$song->title}}</a>
+                                        </h4>
+                                        <p class="uploader text-uppercase"><i class="fa fa-user fa-fw"></i>
+                                            <a class="" href="{{ action('ProfileController@getShow',
+                                                    array('id'=>$song->user->id))}}">{{$song->user->username}}</a>
+                                        </p>
+                                        <p class="clearfix"><span class="badge"><i class="fa fa-clock-o"></i> {{$song->timeago}}</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                    {{--comments--}}
+                    <div class="post-comments">
+                        @include('discomment')
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    {{--sidebar--}}
+                    @include('song.song-sidebar')
+                </div>
+            </div>
+        </div>
+    </div>
 @stop
-@section('script')
-       
-    @stop
-    
+@section('scripts')
+    <script src="{{asset('plugins/soundmanager/script/soundmanager2.js')}}"></script>
+    <script src="{{asset('plugins/soundmanager/script/bar-ui.js')}}"></script>
+    <script src="{{asset('plugins/soundmanager/script/demo.js')}}"></script>
+    <script>
+        $("[data-toggle=popover]").popover({
+            html: true,
+            content: function() {
+                return $('#popover-content').html();
+            }
+        });
+    </script>
+    <script>
+        soundManager.setup({
+            url: 'plugins/soundmanager/swf/',
+            onready: function() {
+                var mySound = soundManager.createSound({
+                    id: 'aSound',
+                    url: '{{asset($song->song)}}'
+                });
+//                mySound.play();
+            },
+            ontimeout: function() {
+                // Hrmm, SM2 could not start. Missing SWF? Flash blocked? Show an error, etc.?
+            }
+        });
+    </script>
+@stop
