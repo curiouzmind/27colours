@@ -1,74 +1,105 @@
-<header class="menu-bar">
-    <!-- menu -->
-    <nav id="" class="nav navbar-default navbar-fixed-top" role="navigation">
-                <div class="container">
-<div class="navbar-header border-bottom">
-                    <!-- logo -->
-                    <a data-ajax="false" class="navbar-brand" href="/">
-                        <img class="img-responsive" src="{{asset('img/logo.png')}}" alt="Logo">
+<nav class="[ navbar navbar-default navbar-fixed-top ][ navbar-bootsnipp animate ]" data-spy="affix" role="navigation">
+    <div class="[ container ]">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="[ navbar-header ]">
+            <button type="button" class="[ navbar-toggle collapsed]" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="[ sr-only ]">Toggle navigation</span>
+                <span class="[ icon-bar ]"></span>
+                <span class="[ icon-bar ]"></span>
+                <span class="[ icon-bar ]"></span>
+            </button>
+            <div class="[ animbrand ]">
+                <a class="[ p50 ][ navbar-brand ][ animate ]" href="/">
+                    <img class="img-responsive" src="{{asset('img/logo.png')}}" alt="27Colours">
+                </a>
+            </div>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="[ collapse navbar-collapse ]" id="bs-example-navbar-collapse-1">
+            <!-- navigation -->
+            <ul class="nav navbar-nav navbar-left">
+                <li class="[ dropdown ]">
+                    <a href="#" class="[ dropdown-toggle ][ animate ]" data-toggle="dropdown">Explore <span class="[ caret ]"></span></a>
+                    <ul class="[ dropdown-menu ]" role="menu">
+                        <li><a href="/song" class="[ animate ]">Tracks <span class="[ pull-right glyphicon glyphicon-music ]"></span></a></li>
+                        <li><a href="/videos" class="[ animate ]">Videos  <span class="[ pull-right glyphicon glyphicon-hd-video ]"></span></a></li>
+                        <li><a href="/galleries" class="[ animate ]">Gallery  <span class="[ pull-right glyphicon glyphicon-picture ]"></span></a></li>
+                        <li><a href="/talents" class="[ animate ]">Talents  <span class="[ pull-right glyphicon glyphicon-user ]"></span></a></li>
+                    </ul>
+                </li>
+                <li class="[ dropdown ]">
+                    <a href="#" class="[ dropdown-toggle ][ animate ]" data-toggle="dropdown">Admin Pages <span class="[ caret ]"></span></a>
+                    <ul class="[ dropdown-menu ]" role="menu">
+                        <li><a href="/admin" class="[ animate ]">Dashboard <span class="[ pull-right fa fa-dashboard ]"></span></a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="[ nav navbar-nav navbar-right ]">
+                <li class="[ visible-xs ]">
+                    <form action="#" method="GET" role="search">
+                        <div class="[ input-group ]">
+                            <input type="text" class="[ form-control ]" name="q" placeholder="Search for Tracks, Videos, Pictures & Talents">
+								<span class="[ input-group-btn ]">
+									<button class="[ btn btn-primary ]" type="submit"><span class="[ glyphicon glyphicon-search ]"></span></button>
+									<button class="[ btn btn-danger ]" type="reset"><span class="[ glyphicon glyphicon-remove ]"></span></button>
+								</span>
+                        </div>
+                    </form>
+                </li>
+                <!-- check if logged in -->
+                @if(Auth::check())
+                <li class="[ dropdown ]">
+                    <a href="#" class="[ dropdown-toggle ][ animate ]" data-toggle="dropdown">
+                        Welcome,  <span class="[ glyphicon glyphicon-user ]"></span> {{ Auth::user()->username }}
+                        <span class="[ caret ]"></span>
                     </a>
-                
-                  <button type="button" class="navbar-toggle" data-toggle="collapse" 
-                  style="padding:10px;margin-right:30px;" data-target="#navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                  </button>
+                    <ul class="[ dropdown-menu ]" role="menu">
+
+                        <li><a href="/profile" class="[ animate ]">
+                                Profile <span class="[ pull-right glyphicon glyphicon-user ]"></span></a>
+                        </li>
+                        <li><a href="/song/upload" class="[ animate ]">
+                                Add Songs <span class="[ pull-right glyphicon glyphicon-music ]"></span></a>
+                        </li>
+                        <li><a href="/video/upload" class="[ animate ]">
+                                Add Videos
+                                <span class="[ pull-right glyphicon glyphicon-hd-video ]"></span></a>
+                        </li>
+                        <li><a href="/gallery/upload" class="[ animate ]">
+                                Add Pictures <span class="[ pull-right glyphicon glyphicon-picture ]"></span></a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{{action('UsersController@getLogout')}}" class="[ animate ]">
+                                Logout  <span class="[ pull-right glyphicon glyphicon-off ]"></span></a>
+                        </li>
+                    </ul>
+                </li>
+                @else
+                {{--<li class="[ dropdown ]">--}}
+                    {{--<a href="#" class="[ dropdown-toggle ][ animate ]" data-toggle="dropdown">Sign Up <span class="[ caret ]"></span></a>--}}
+                    {{--<ul class="[ dropdown-menu ]" role="menu">--}}
+                        {{--<li><a href="/users/register" class="[ animate ]">Sign Up as a Talent</a></li>--}}
+                        {{--<li><a href="/users/register" class="[ animate ]">Sign Up as a Fan</a></li>--}}
+                    {{--</ul>--}}
+                {{--</li>--}}
+                <li><a href="/users/register" class="[ animate ]">Sign Up as a Talent</a></li>
+                <li><a class="animate" href="/users/login">Login</a></li>
+                @endif
+                <li class="[ hidden-xs ]"><a href="#toggle-search" class="[ animate ]"><span class="[ glyphicon glyphicon-search ]"></span></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="[ bootsnipp-search animate ]">
+        <div class="[ container ]">
+            <form action="#" method="GET" role="search">
+                <div class="[ input-group ]">
+                    <input type="text" class="[ form-control ]" name="q" placeholder="Search for Tracks, Videos, Pictures & Talents">
+						<span class="[ input-group-btn ]">
+							<button class="[ btn btn-primary ]" type="submit"><span class="[ glyphicon glyphicon-search ]"></span></button>
+                            <button class="[ btn btn-danger ]" type="reset"><span class="[ glyphicon glyphicon-remove ]"></span></button>
+						</span>
                 </div>
-                   @yield('menu')
-                <!-- call to action -->
-                     <div id="header-links" class="nav navbar-nav navbar-right col-md-4-offset" style="margin:0px -15px;padding:0;">
-                    <!-- <span class="search" style="width:250px;">
-                            
-                                   <form>
-<select id="search" name="search">
-<option value="">Search ...</option>
-</select>
-</form>
-                        </span> -->
-                        <!-- check if logged in -->
-                        @if(Auth::check())
-                        <span class="login-thumb" style="padding: 0;margin:0px -15px;">
-                            <div class="dropdown">
-                                <a href="javascript:void(0);" data-icon="chevron" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <!-- <span class="caret"></span> -->
-                                    {{HTML::image(isset(Auth::user()->profilePhoto->image) ? 
-                                        Auth::user()->profilePhoto->image : 'img/user.jpg', 
-                                        'Profile thumbnail', array( 'class'=>'header-thumb',
-                                        'width'=>'38px', 'height'=>'38px', 'style'=>'margin-left:0px;'))}}
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                    @if(Auth::check())
-                                        <li><a data-ajax="false" href="/profile"><i class="fa fa-user fa-xs"></i> | View Profile</a></li>                                       
-                                        <li><a data-ajax="false" href="/profile/edit"><i class="fa fa-cog fa-xs"></i> | Edit Profile</a></li>
-                                        <li><a data-ajax="false" href="/song/upload"><i class="fa fa-music fa-xs"></i> | Add Songs</a></li>
-                                        <li><a data-ajax="false" href="/video/upload"><i class="fa fa-video-camera fa-xs"></i> | Add Videos</a></li>
-                                        <li><a data-ajax="false" href="/gallery/upload"><i class="fa fa-camera fa-xs"></i> | Add Pictures</a></li>
-                                        <li><a data-ajax="false" href="{{action('UsersController@getLogout')}}"><i class="fa fa-power-off fa-xs"></i> | Logout</a></li>
-                                    @else
-                                        <li>{{ HTML::linkRoute('register', 'Registration', array('class'=>'hidden-xs hidden-sm'))}}</li>
-                                        <li>{{ HTML::linkRoute('login', 'Sign In' )}}</li>
-                                    @endif 
-                                    </ul>
-                            </div>
-                        </span>
-                        @else
-                        <!-- CALL TO ACTION UPLOAD-->
-                        <span class="header-call-to-action" data-toggle="tooltip" data-placement="bottom" title="Upload">
-                          
-                          <a href="/users/login" class="btn"><i class="fa fa-upload"></i> <span class="hidden" style="border:none;"> Upload</span></a>
-                        </span><!-- END .HEADER-CALL-TO-ACTION -->
-                        <span class="header-login" data-toggle="tooltip" data-placement="bottom" title="Login">
-                            <a href="/users/login" class="btn"><i class="fa fa-power-off"></i> <span class="hidden" style="border:none;">Sign In</span></a>
-                        </span>
-                        <!-- HEADER REGISTER -->
-                        <span class="header-register" data-toggle="tooltip" data-placement="bottom" title="Sign Up">
-                             <a href="/users/register" class="btn"><i class="fa fa-user"></i> <span class="hidden" style="border:none;">Register</span></a>
-                        </span> <!-- END .HEADER-REGISTER -->                        
-                        @endif
-                    </div>
-                
-                </div> <!-- ./ container -->
-    </nav>
-</header>
+            </form>
+        </div>
+    </div>
+</nav>

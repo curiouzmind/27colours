@@ -1,7 +1,7 @@
 <?php
 class BlogController extends BaseController
 {
- 
+
     /* get functions */
     public function index()
     {
@@ -10,36 +10,36 @@ class BlogController extends BaseController
         $data = Auth::user();
     }
         $blogs = Blog::orderBy('id','desc')->paginate(10);
-       
+
         return View::make('layout.home', compact('data','blogs'));
     }
 
-    
+
     public function showBlog(Blog $blog)
     {
         $comments = $blog->comments()->where('Is_approved', '=', 1)->get();
-       
+
         return View::make('blog.single', compact('blog', 'comments'));
     }
- 
+
     public function newPost()
     {
         $this->layout->title = 'New Post';
         $this->layout->main = View::make('dash')->nest('content', 'posts.new');
     }
- 
+
     public function editPost(Post $post)
     {
         $this->layout->title = 'Edit Post';
         $this->layout->main = View::make('dash')->nest('content', 'posts.edit', compact('post'));
     }
- 
+
     public function deletePost(Post $post)
     {
         $post->delete();
         return Redirect::route('post.list')->with('success', 'Post is deleted!');
     }
- 
+
     /* post functions */
     public function savePost()
     {
@@ -63,7 +63,7 @@ class BlogController extends BaseController
         else
             return Redirect::back()->withErrors($valid)->withInput();
     }
- 
+
     public function updatePost(Post $post)
     {
         $data = [
@@ -91,5 +91,5 @@ class BlogController extends BaseController
         else
             return Redirect::back()->withErrors($valid)->withInput();
     }
- 
+
 }

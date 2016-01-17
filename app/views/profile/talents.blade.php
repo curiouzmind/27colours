@@ -1,330 +1,227 @@
 @extends('layout.master')
-     @section('title')
+    @section('title')
         <title>Talents | 27Colours</title>
-     @stop
-     @section('css-links')
-        
-    @stop
-    @section('menu')
-       <!-- menu navigation -->
-                <div class="collapse navbar-collapse col-md-8" id="navbar-collapse-1">                    
-                    
-                    <!-- navigation -->
-                    <ul class="nav navbar-nav navbar-left">
-                        <li>
-                            <a data-ajax="false" href="/">
-                                <i class="fa fa-home fa-fw fa-2x"></i>
-                                <span class="sr-only">(Current)</span>
-                            </a>
-                        </li>
-                        <li><a data-ajax="false" href="/song"><i class=""></i> Music</a></li>
-                        <li><a data-ajax="false" href="/videos"><i class=""></i> Videos</a></li>
-                        <li><a data-ajax="false" href="/galleries"><i class=""></i> Gallery</a></li>
-                        <li class="active"><a data-ajax="false" href="/talents"><i class=""></i> Talents</a></li>
-                    </ul>
-                </div> <!-- ./ menu navigation -->
     @stop
     @section('content')
-        <!-- breadcrumbs -->
-    <div class="breadcrumb">
-     <div class="overlay-img">
-      <div class="row padding-5">
-       <div class="container">
-        <div class="btn-group pull-left margin-25-0">
-            <a href="/" class="btn btn-default"><i class="fa fa-home"></i></a>
-            <a href="/talents" class="btn btn-danger-reverse">Talents <i class="fa fa-user"></i></a>
+        <!-- page header -->
+        <div class="page-banner well">
+            <div class="overlay-bg text-center">
+                <div class="container">
+                    <h2 class="text-uppercase bold">Talents</h2>
+                    <h4 class="text-capitalize">Browse profiles of Talents.</h4>
+                </div>
+            </div>
         </div>
-       </div>
-      </div>
-     </div>
-    </div>
-    <!-- posts -->
-        <div id="section-3a" class="featured-posts">
-        <div class="container padding-0">
-          <div class="row margin05">
-              <div class="col-md-8 col-xs-12 padding-2px">
-                
-                <div class="featured-tab">
-                  <ul class="nav nav-tabs padding-2px pages-tabs">
-                        <li class="active">
-                            <a class="" href="#modelling" data-toggle="tab">Models</a>
-                        </li>
-                        <li>
-                            <a class="" href="#singing" data-toggle="tab">Music</a>
-                        </li>
-                        <li>
-                            <a class="" href="#dancing" data-toggle="tab">Dance</a>
-                        </li>
-                        <li>
-                            <a class="" href="#comedy" data-toggle="tab">Comedy</a>
-                        </li>
-                        <li>
-                            <a class="" href="#fans" data-toggle="tab">Fans</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content">
-                        <!-- featured songs -->
-
-                        <!-- modelling -->
-                        <div class="tab-pane fade active in" id="modelling">
-                            <!-- Errors, Alerts -->
-                            @if (Session::get('errors'))
-                                <p class="alert alert-error alert-danger fade in" role="alert"><a>
-                                {{{ Session::get('errors') }}}</a></p>
-                            @endif
-                            @if (Session::get('notices'))
-                                <p class="alert alert-info fade in" role="alert"><a>
-                                {{{ Session::get('notices') }}}</a></p>
-                            @endif
-                            @if ($models->isEmpty())
-                                <p class="text-center alert alert-info"  role="alert"> There are no Models profiles!</p>
-                            @else
-                            <!-- Fetch Songs -->
-                            @foreach ($models as $model)
-                                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6" style="padding:0 2px;">
-                                        <div class="featured-post1">
-                                           <a data-ajax="false" href="{{ action('ProfileController@getShow', $model->id)}}">
-                                            <figure>
-                                              <div class="post-img-boxed center-block">
-                                                @if($model->profilePhoto->image !== '')
-                               {{HTML::image($model->profilePhoto->image, $model->username,array('class'=>'img-responsive thumbnail center-block'))}}
-                               @else
-                                {{HTML::image('img/user.jpg','thumbnail',array('width' => 100 , 'height' => 100, 'class'=>'center-block'))}}
-                               @endif
-                                              </div>
-                                            </figure>
-                                           </a>
-                                            <p class="post-uploader userinfo-name">
-                                                <i class="fa fa-user fa-fw"></i>
-                                                {{ HTML::linkAction('ProfileController@getShow', $model->username, array('id'=>$model->id),
-                                                array('data-ajax'=>'false'))}}
-                                            </p>  
-                                            <ul class="post-util list-inline">
-                                                <!--<li  data-toggle="tooltip" data-placement="right" title="Coming soon"><i class="fa fa-comments"></i> 20 </li>
-                                                <li  data-toggle="tooltip" data-placement="right" title="Coming soon"><i class="fa fa-heart"></i> 20 </li>-->
-                                                <li class="post-time"><i class="fa fa-clock-o"></i> {{$model->timeago}}</li>
-                                            </ul>
-                                       </div>										
-                                    </div>
-																
-                            @endforeach							
-                            @endif 
-							
-                            
-                        </div>
-                        <!-- singing -->
-                        <div class="tab-pane fade in" id="singing">
-                            <!-- Errors, Alerts -->
-                            @if (Session::get('errors'))
-                                <p class="alert alert-error alert-danger fade in" role="alert"><a>
-                                {{{ Session::get('errors') }}}</a></p>
-                            @endif
-                            @if (Session::get('notices'))
-                                <p class="alert alert-info fade in" role="alert"><a>
-                                {{{ Session::get('notices') }}}</a></p>
-                            @endif
-                            @if ($musicians->isEmpty())
-                                <p class="text-center alert alert-info"  role="alert"> There are no Singers profiles!</p>
-                            @else
-                            <!-- Fetch Songs -->
-                            @foreach ($musicians as $musician)
-                                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6" style="padding:0 2px;">
-                                        <div class="featured-post1">
-                                           <a data-ajax="false" href="{{ action('ProfileController@getShow', $musician->id)}}">
-                                            <figure>
-                                              <div class="post-img-boxed center-block">
-                                              @if(isset($musician->profilePhoto->image))
-                               {{HTML::image($musician->profilePhoto->image, $musician->username,array('class'=>'img-responsive thumbnail center-block'))}}
-                               @else
-                                {{HTML::image('img/user.jpg','thumbnail',array('width' => 100 , 'height' => 100, 'class'=>'center-block'))}}
-                               @endif
-                                              </div>
-                                            </figure>
-                                           </a>
-                                            <p class="post-uploader userinfo-name">
-                                                <i class="fa fa-user fa-fw"></i>
-                                                {{ HTML::linkAction('ProfileController@getShow', $musician->username, array('id'=>$musician->id),
-                                                array('class'=>'', 'data-ajax'=>'false'))}}
-                                            </p>  
-                                            <ul class="post-util list-inline">
-                                                <!--<li  data-toggle="tooltip" data-placement="right" title="Coming soon"><i class="fa fa-comments"></i> 20 </li>
-                                                <li  data-toggle="tooltip" data-placement="right" title="Coming soon"><i class="fa fa-heart"></i> 20 </li>-->
-                                                <li class="post-time"><i class="fa fa-clock-o"></i> {{$musician->timeago}}</li>
-                                            </ul>
-                                        </div>
-										 
-                                    </div>
-							
-                            @endforeach
-                            @endif 
-                            {{ $musicians -> links() }}
-                           
-                            
-                        </div>
-                        <!-- dancing -->
-                        <div class="tab-pane fade in" id="dancing">
-                            <!-- Errors, Alerts -->
-                            @if (Session::get('errors'))
-                                <p class="alert alert-error alert-danger fade in" role="alert"><a>
-                                {{{ Session::get('errors') }}}</a></p>
-                            @endif
-                            @if (Session::get('notices'))
-                                <p class="alert alert-info fade in" role="alert"><a>
-                                {{{ Session::get('notices') }}}</a></p>
-                            @endif
-                            @if ($dancers->isEmpty())
-                                <p class="text-center alert alert-info"  role="alert"> There are no Dancers profiles!</p>
-                            @else
-                            <!-- Fetch Profiles -->
-                            @foreach ($dancers as $dancer)
-                                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6" style="padding:0 2px;">
-                                        <div class="featured-post1">
-                                           <a data-ajax="false" href="{{ action('ProfileController@getShow', $dancer->id)}}">
-                                            <figure>
-                                              <div class="post-img-boxed center-block">
-                                                  @if(isset($dancer->profilePhoto->image))
-                               {{HTML::image($dancer->profilePhoto->image, $dancer->username,array('class'=>'img-responsive thumbnail center-block'))}}
-                               @else
-                                {{HTML::image('img/user.jpg','thumbnail',array('width' => 100 , 'height' => 100, 'class'=>'center-block'))}}
-                               @endif
-                                              </div>
-                                            </figure>
-                                           </a>
-                                            <p class="post-uploader userinfo-name">
-                                                <i class="fa fa-user fa-fw"></i>
-                                                {{ HTML::linkAction('ProfileController@getShow', $dancer->username, array('id'=>$dancer->id),
-                                                array('class'=>'', 'data-ajax'=>'false'))}}
-                                            </p>  
-                                            <ul class="post-util list-inline">
-                                               <!-- <li  data-toggle="tooltip" data-placement="right" title="Coming soon"><i class="fa fa-comments"></i> 20 </li>
-                                                <li  data-toggle="tooltip" data-placement="right" title="Coming soon"><i class="fa fa-heart"></i> 20 </li>-->
-                                                <li class="post-time"><i class="fa fa-clock-o"></i> {{$dancer->timeago}}</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-							@endforeach
-                            @endif 
-                            
-                        </div>
-                        <!-- comedy -->
-                        <div class="tab-pane fade in" id="comedy">
-                            <!-- Errors, Alerts -->
-                            @if (Session::get('errors'))
-                                <p class="alert alert-error alert-danger fade in" role="alert"><a>
-                                {{{ Session::get('errors') }}}</a></p>
-                            @endif
-                            @if (Session::get('notices'))
-                                <p class="alert alert-info fade in" role="alert"><a>
-                                {{{ Session::get('notices') }}}</a></p>
-                            @endif
-                            @if ($comedians->isEmpty())
-                                <p class="text-center alert alert-info"  role="alert"> There are no Comedians profiles!</p>
-                            @else
-                            <!-- Fetch Profiles -->
-                            @foreach ($comedians as $comedian)
-                                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6" style="padding:0 2px;">
-                                        <div class="featured-post1">
-                                           <a data-ajax="false" href="{{ action('ProfileController@getShow', $comedian->id)}}">
-                                            <figure>
-                                              <div class="post-img-boxed center-block">
-                                               @if(isset($comedian->profilePhoto->image))
-                               {{HTML::image($comedian->profilePhoto->image, $comedian->username,array('class'=>'img-responsive thumbnail center-block'))}}
-                               @else
-                                {{HTML::image('img/user.jpg','thumbnail',array('width' => 100 , 'height' => 100, 'class'=>'center-block'))}}
-                               @endif
-                                               </div>
-                                            </figure>
-                                            <p class="post-uploader userinfo-name">
-                                                <i class="fa fa-user fa-fw"></i>
-                                                {{ HTML::linkAction('ProfileController@getShow', $comedian->username, array('id'=>$comedian->id),
-                                                array('class'=>'', 'data-ajax'=>'false'))}}
-                                            </p>  
-                                            <ul class="post-util list-inline">
-                                                <!--<li  data-toggle="tooltip" data-placement="right" title="Coming soon"><i class="fa fa-comments"></i> 20 </li>
-                                                <li  data-toggle="tooltip" data-placement="right" title="Coming soon"><i class="fa fa-heart"></i> 20 </li>-->
-                                                <li><i class="fa fa-clock-o"></i> {{$comedian->timeago}}</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-							
-                            @endforeach
-                            @endif 
-                             
-                        </div>
-						<!-- fans -->
-                        <div class="tab-pane fade in" id="fans">
-                            <!-- Errors, Alerts -->
-                            @if (Session::get('errors'))
-                                <p class="alert alert-error alert-danger fade in" role="alert"><a>
-                                {{{ Session::get('errors') }}}</a></p>
-                            @endif
-                            @if (Session::get('notices'))
-                                <p class="alert alert-info fade in" role="alert"><a>
-                                {{{ Session::get('notices') }}}</a></p>
-                            @endif
-                            @if ($fans->isEmpty())
-                                <p class="text-center alert alert-info"  role="alert"> There are no Fans profiles!</p>
-                            @else
-                            <!-- Fetch Profiles -->
-                            @foreach ($fans as $fan)
-                                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6" style="padding:0 2px;">
-                                        <div class="featured-post1">
-                                           <a data-ajax="false" href="{{ action('ProfileController@getShow', $fan->id)}}">
-                                            <figure>
-                                              <div class="post-img-boxed center-block">
-                                               @if(isset($fan->profilePhoto->image))
-                               {{HTML::image($fan->profilePhoto->image, $fan->username,array('class'=>'img-responsive thumbnail center-block'))}}
-                               @else
-                                {{HTML::image('img/user.jpg','thumbnail',array('width' => 100 , 'height' => 100, 'class'=>'center-block'))}}
-                               @endif
-                                               </div>
-                                            </figure>
-                                            <p class="post-uploader userinfo-name">
-                                                <i class="fa fa-user fa-fw"></i>
-                                                {{ HTML::linkAction('ProfileController@getShow', $fan->username, array('id'=>$fan->id),
-                                                array('class'=>'', 'data-ajax'=>'false'))}}
-                                            </p>  
-                                            <ul class="post-util list-inline">
-                                                <!--<li  data-toggle="tooltip" data-placement="right" title="Coming soon"><i class="fa fa-comments"></i> 20 </li>
-                                                <li  data-toggle="tooltip" data-placement="right" title="Coming soon"><i class="fa fa-heart"></i> 20 </li>-->
-                                                <li><i class="fa fa-clock-o"></i> {{$fan->timeago}}</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-							
-                            @endforeach
-                            @endif 
-                             {{ $fans-> links() }}
-                           
-							
-                        </div>
-                       
+        <!-- posts -->
+        <div class="">
+            {{--categories nav-tabs bar --}}
+            <div class="well p5">
+                <div class="container">
+                <div class="row categories-bar">
+                <div class="col-md-12">
+                    <div class="container">
+                        <ul class="nav nav-tabs text-uppercase">
+                            <li class="active"><a class="" href="#modelling" data-toggle="tab">Models</a></li>
+                            <li><a class="" href="#singing" data-toggle="tab">Music</a></li>
+                            <li><a class="" href="#dancing" data-toggle="tab">Dance</a></li>
+                            <li><a class="" href="#comedy" data-toggle="tab">Comedy</a></li>
+                            <li><a class="" href="#fans" data-toggle="tab">Fans</a></li>
+                        </ul>
                     </div>
                 </div>
-              </div>
-              <div class="col-md-4 col-xs-12 padding-0 sidebar">
-                                                <!-- Celebrity Endorsements -->
-                        <div class="embed-responsive embed-responsive-16by9" style="margin: 0 0 5px 0; min-height:320px;">
-                            <iframe class="embed-responsive-item" width="100%" height="250" src="//www.youtube.com/embed/xzRXKlgq7zs?rel=0" frameborder="0" allowfullscreen></iframe>
-                        </div>
-                        <!-- Facebook Like box -->
-                        <div class="fb-widget">
-                          <div class="fb-page" data-href="https://www.facebook.com/27colours" 
-                            data-width="250" data-height="250" data-hide-cover="false" 
-                            data-show-facepile="true" data-show-posts="false">
-                            <div class="fb-xfbml-parse-ignore">
-                            <blockquote cite="https://www.facebook.com/27colours">
-                            <a href="https://www.facebook.com/27colours">27 colours</a></blockquote>
+            </div>
+            </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <!-- Errors, Alerts -->
+                    @if (Session::get('errors'))
+                        <p class="alert alert-error alert-danger fade in" role="alert"><a>
+                                {{{ Session::get('errors') }}}</a></p>
+                    @endif
+                    @if (Session::get('notices'))
+                        <p class="alert alert-info fade in" role="alert"><a>
+                                {{{ Session::get('notices') }}}</a></p>
+                    @endif
+                    {{--tab-content--}}
+                    <div class="col-md-8">
+                        <div class="tab-content">
+                            <!-- modelling -->
+                            <div class="tab-pane fade active in" id="modelling">
+                                @if ($models->isEmpty())
+                                    <p class="text-center alert alert-info"  role="alert"> no profile here :( !</p>
+                                    @else
+                                            <!-- Fetch Songs -->
+                                    @foreach ($models as $model)
+                                        <div class="item grid-thumbs col-xs-12 col-sm-6 col-lg-4">
+                                            <div class="thumbnail">
+                                                @if(isset($model->profilePhoto->image))
+                                                    {{HTML::image($model->profilePhoto->image, $model->username,array('class'=>'img-responsive group list-group-image'))}}
+                                                @else
+                                                    {{HTML::image('img/user.PNG','thumbnail',array('class'=>'group list-group-image', 'style'=>'padding:10px;'))}}
+                                                @endif
+                                                <div class="caption">
+                                                    <h4 class="upload-title group inner list-group-item-heading text-uppercase">
+                                                        <i class="fa fa-user fa-fw"></i>
+                                                        @if($model->username!=='')
+                                                            <a class="" href="{{ action('ProfileController@getShow', $model->id,
+                                                            array('id'=> $model->id))}}">{{$model->username}}</a>
+                                                        @else
+                                                            <a href="{{ action('ProfileController@getShow', $model->username, array('id'=> $model->id))}}">Unknown</a>
+                                                        @endif
+                                                    </h4>
+                                                    <p class="clearfix"><span class="badge"><i class="fa fa-clock-o"></i> {{$model->timeago}}</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
+                                <div class="clearfix"></div>
+                                <!-- pagination -->
+                                {{$models -> links() }}
                             </div>
-                          </div>
-                        </div> 
-                        <!-- Featured Uploads-->
-              </div>
-          </div>
+                            <!-- music -->
+                            <div class="tab-pane fade" id="singing">
+                                @if ($musicians->isEmpty())
+                                    <p class="text-center alert alert-info"  role="alert"> no profile here :( !</p>
+                                    @else
+                                            <!-- Fetch Songs -->
+                                    @foreach ($musicians as $musician)
+                                        <div class="item grid-thumbs col-xs-12 col-sm-6 col-lg-4">
+                                            <div class="thumbnail">
+                                                @if(isset($musician->profilePhoto->image))
+                                                    {{HTML::image($musician->profilePhoto->image, $musician->username,array('class'=>'img-responsive group list-group-image'))}}
+                                                @else
+                                                    {{HTML::image('img/user.PNG','thumbnail',array('class'=>'group list-group-image', 'style'=>'padding:10px;'))}}
+                                                @endif
+                                                <div class="caption">
+                                                    <h4 class="upload-title group inner list-group-item-heading text-uppercase">
+                                                        <i class="fa fa-user fa-fw"></i>
+                                                        @if($musician->username!=='')
+                                                            <a class="" href="{{ action('ProfileController@getShow', $musician->id,
+                                                            array('id'=> $musician->id))}}">{{$musician->username}}</a>
+                                                        @else
+                                                            <a href="{{ action('ProfileController@getShow', $musician->username, array('id'=> $musician->id))}}">Unknown</a>
+                                                        @endif
+                                                    </h4>
+                                                    <p class="clearfix"><span class="badge"><i class="fa fa-clock-o"></i> {{$musician->timeago}}</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
+                                <div class="clearfix"></div>
+                                <!-- pagination -->
+                                {{$musicians -> links() }}
+                            </div>
+                            <!-- music -->
+                            <div class="tab-pane fade" id="dancing">
+                                @if ($dancers->isEmpty())
+                                    <p class="text-center alert alert-info"  role="alert"> no profile here :( !</p>
+                                    @else
+                                            <!-- Fetch Songs -->
+                                    @foreach ($dancers as $dancer)
+                                        <div class="item grid-thumbs col-xs-12 col-sm-6 col-lg-4">
+                                            <div class="thumbnail">
+                                                @if(isset($dancer->profilePhoto->image))
+                                                    {{HTML::image($dancer->profilePhoto->image, $dancer->username,array('class'=>'img-responsive group list-group-image'))}}
+                                                @else
+                                                    {{HTML::image('img/user.PNG','thumbnail',array('class'=>'group list-group-image', 'style'=>'padding:10px;'))}}
+                                                @endif
+                                                <div class="caption">
+                                                    <h4 class="upload-title group inner list-group-item-heading text-uppercase">
+                                                        <i class="fa fa-user fa-fw"></i>
+                                                        @if($dancer->username!=='')
+                                                            <a class="" href="{{ action('ProfileController@getShow', $dancer->id,
+                                                            array('id'=> $dancer->id))}}">{{$dancer->username}}</a>
+                                                        @else
+                                                            <a href="{{ action('ProfileController@getShow', $dancer->username, array('id'=> $dancer->id))}}">Unknown</a>
+                                                        @endif
+                                                    </h4>
+                                                    <p class="clearfix"><span class="badge"><i class="fa fa-clock-o"></i> {{$dancer->timeago}}</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
+                                <div class="clearfix"></div>
+                                <!-- pagination -->
+                                {{$dancers -> links() }}
+                            </div>
+                            <!-- comedy -->
+                            <div class="tab-pane fade" id="comedy">
+                                @if ($comedians->isEmpty())
+                                    <p class="text-center alert alert-info"  role="alert"> no profile here :( !</p>
+                                    @else
+                                            <!-- Fetch talents -->
+                                    @foreach ($comedians as $comedian)
+                                        <div class="item grid-thumbs col-xs-12 col-sm-6 col-lg-4">
+                                            <div class="thumbnail">
+                                                @if(isset($comedian->profilePhoto->image))
+                                                    {{HTML::image($comedian->profilePhoto->image, $comedian->username,array('class'=>'img-responsive group list-group-image'))}}
+                                                @else
+                                                    {{HTML::image('img/user.PNG','thumbnail',array('class'=>'group list-group-image', 'style'=>'padding:10px;'))}}
+                                                @endif
+                                                <div class="caption">
+                                                    <h4 class="upload-title group inner list-group-item-heading text-uppercase">
+                                                        <i class="fa fa-user fa-fw"></i>
+                                                        @if($comedian->username!=='')
+                                                            <a class="" href="{{ action('ProfileController@getShow', $comedian->id,
+                                                            array('id'=> $comedian->id))}}">{{$comedian->username}}</a>
+                                                        @else
+                                                            <a href="{{ action('ProfileController@getShow', $comedian->username, array('id'=> $comedian->id))}}">Unknown</a>
+                                                        @endif
+                                                    </h4>
+                                                    <p class="clearfix"><span class="badge"><i class="fa fa-clock-o"></i> {{$comedian->timeago}}</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
+                                <div class="clearfix"></div>
+                                <!-- pagination -->
+                                {{$comedians -> links() }}
+                            </div>
+                            <!-- fans -->
+                            <div class="tab-pane fade" id="fans">
+                                @if ($fans->isEmpty())
+                                    <p class="text-center alert alert-info"  role="alert"> no profile here :( !</p>
+                                    @else
+                                            <!-- Fetch talents -->
+                                    @foreach ($fans as $fan)
+                                        <div class="item grid-thumbs col-xs-12 col-sm-6 col-lg-4">
+                                            <div class="thumbnail">
+                                                @if(isset($fan->profilePhoto->image))
+                                                    {{HTML::image($fan->profilePhoto->image, $fan->username,array('class'=>'img-responsive group list-group-image'))}}
+                                                @else
+                                                    {{HTML::image('img/user.PNG','thumbnail',array('class'=>'group list-group-image', 'style'=>'padding:10px;'))}}
+                                                @endif
+                                                <div class="caption">
+                                                    <h4 class="upload-title group inner list-group-item-heading text-uppercase">
+                                                        <i class="fa fa-user fa-fw"></i>
+                                                        @if($fan->username!=='')
+                                                            <a class="" href="{{ action('ProfileController@getShow', $fan->id,
+                                                            array('id'=> $fan->id))}}">{{$fan->username}}</a>
+                                                        @else
+                                                            <a href="{{ action('ProfileController@getShow', $fan->id, array('id'=> $fan->id))}}">Unknown</a>
+                                                        @endif
+                                                    </h4>
+                                                    <p class="clearfix"><span class="badge"><i class="fa fa-clock-o"></i> {{$fan->timeago}}</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
+                                <div class="clearfix"></div>
+                                <!-- pagination -->
+                                {{$fans -> links() }}
+                            </div>
+                        </div>
+                    </div>
+                    {{--sidebar--}}
+                    <div class="col-md-4">
+                        @include('profile.talent-sidebar')
+                    </div>
+                </div> <!-- ./ row ends -->
+            </div>
         </div>
-        </div>    
-    @stop
-    @section('script')
-       
-    @stop
-    

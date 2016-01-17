@@ -1,19 +1,19 @@
 <?php
 class PictureController extends BaseController
 {
- 
+
     /* get functions */
     public function index()
     {
        $modelling =  Picture::where('cat', '=', 'modelling')->take(8)->orderBy('id','desc')->get();
           $others =  Picture::where('cat', '=', 'others')->take(8)->orderBy('id','desc')->get();
             $gals =  Picture::orderBy('id', 'desc')->take(8)->get();
-       
+
         return View::make('gallery.index',['modelling'=>$modelling, 'others'=>$others,'gals'=>$gals]);
-        
+
       }
 
-   
+
 
     public function getNew()
     {
@@ -30,7 +30,7 @@ class PictureController extends BaseController
 
      public function showGallery(Picture $gallery)
     {
-         
+
       $id= $gallery->id;
       $cat= $gallery->cat;
       $reCats =  Picture::where('cat', '=', $cat)->take(5)->orderBy('id','desc')->get();
@@ -39,7 +39,7 @@ class PictureController extends BaseController
         ->with('gallery',$gallery)
         ->with('cat', $cat)
         ->with('reCats', $reCats);
-       
+
     }
 
      public function postCreate()
@@ -72,10 +72,10 @@ class PictureController extends BaseController
       $img_fileName = $_FILES['image']['name'];
      $img_fileType = $_FILES['image']['type'];
       $img_fileContent = file_get_contents($_FILES['image']['tmp_name']);
-      $img_dataUrl = 'data:' . $img_fileType . ';base64,' . base64_encode($img_fileContent); */ 
+      $img_dataUrl = 'data:' . $img_fileType . ';base64,' . base64_encode($img_fileContent); */
 //
 
-    
+
 
    // $json = json_encode(array(
       //'song_name' => $music,
@@ -91,7 +91,7 @@ class PictureController extends BaseController
     //  'category' =>Input::get('cat'),
 
       // ));
-     // echo $json;  
+     // echo $json;
       //$acct= $_POST['Groucho'];
      // $user=$_POST['accountnum'];
 
@@ -100,9 +100,9 @@ class PictureController extends BaseController
       //   $validator = Validator::make($photo, $rules);
 
        // if ($validator->passes()) {
-           
+
             // Create and save a new user, mass assigning all of the input fields (including the 'avatar' file field).
-          
+
           $pic =new Picture;
           $pic->caption = Input::get('caption');
           $pic->cat= Input::get('cat');
@@ -112,13 +112,13 @@ class PictureController extends BaseController
 
          $song_fileName3 = Str::random(6).'_'.$song_fileName2;
          $img_fileName3  = Str::random(6).'_'.$img_fileName2;
-         
+
         $img_desPath= public_path('img/galleries/');
         $song_desPath= public_path('img/songs/');
 
         //move_uploaded_file($song_fileName, $song_desPath);
         //move_uploaded_file($img_fileName,  $img_desPath);
-       
+
         $music->move($song_desPath, $song_fileName3);
         $image->move($img_desPath,  $img_fileName3);
 
@@ -157,7 +157,7 @@ class PictureController extends BaseController
 
         $validator = Validator::make($photo, $rules);
 
-        if ($validator->passes()) 
+        if ($validator->passes())
         {    */
        $gallery =new Gallery;
        $gallery->caption = Input::get('caption');
@@ -168,20 +168,20 @@ class PictureController extends BaseController
         $extension = $file->getClientOriginalExtension();
         $name = $fileName.'.'.$extension;
 
-     
+
         $desPath= public_path('img/galleries/');
 
         $gallery->image = 'img/galleries/'.$name;
         $gallery->user()->associate(Auth::user());
         $gallery->save();
         $file->move($desPath,$name);
-        
+
          return Redirect::to('/profile')
          ->with('noticeg', 'New Photos added!!!');
      // $gallery->image = 'http://localhost:8060/public/img'.$name;
     //  }
     //  return Redirect::to('/editGallery')
-    //    ->with('errorg', $validator->messages());   
+    //    ->with('errorg', $validator->messages());
 
     }
 
@@ -215,7 +215,7 @@ class PictureController extends BaseController
      public function doDelete()
      {
        $song=Song::findorfail(Input::get('id'));
-         
+
         if ($song) {
             File::delete('public/img/songs/'.$song->image);
              $song->delete();
@@ -227,7 +227,7 @@ class PictureController extends BaseController
          return Redirect::to('/profile')
         ->with('errors', 'Error deleting song');
 
-      
+
       //$songs= $user->songs()->idDescending()->get();
 
        // $song=Song::findorfail(Input::get('id'));
@@ -239,10 +239,10 @@ class PictureController extends BaseController
 public function search()
     {
         $search =Input::get('s-term');
-      
+
         $galleries= Gallery::search($search)->paginate(10);
 
-      
+
       $videos = Video::orderBy('id','desc')->paginate(10);
       $songs= Song::orderBy('id','desc')->paginate(10);
 
@@ -252,19 +252,19 @@ public function search()
      ->with('videos', $videos);
 
  }
- 
+
     public function editPost(Post $post)
     {
         $this->layout->title = 'Edit Post';
         $this->layout->main = View::make('dash')->nest('content', 'posts.edit', compact('post'));
     }
- 
+
     public function deletePost(Post $post)
     {
         $post->delete();
         return Redirect::route('post.list')->with('success', 'Post is deleted!');
     }
- 
+
     /* post functions */
     public function savePost()
     {
@@ -288,7 +288,7 @@ public function search()
         else
             return Redirect::back()->withErrors($valid)->withInput();
     }
- 
+
     public function updatePost(Post $post)
     {
         $data = [
@@ -316,5 +316,5 @@ public function search()
         else
             return Redirect::back()->withErrors($valid)->withInput();
     }
- 
+
 }

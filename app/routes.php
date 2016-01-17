@@ -106,12 +106,12 @@ Route::get('/upload', 'UploadController@index');
        // $user->access_token = $provider->getAccessToken();
         //}
         $user->save();
-        
+
          $new = User::where('email', '=', $profile->email)->first();
 
                 //  Auth::login($new);
-        
-        
+
+
      //   if($user->save())
       //  {
       //  $photo='https://graph.facebook.com/'.$id.'/picture?width=150&height=150';
@@ -125,16 +125,16 @@ Route::get('/upload', 'UploadController@index');
         return View::make('profile.edit', array('user'=>$new));
       //  }
       //  return Redirect::to('users/login');
-	      	 
-      
+
+
         } else {
          $checkUser->access_token = $provider->getAccessToken();
          if ($checkUser->save())
  		Auth::loginUsingId($checkUser->id);
  		return Redirect::to('/profile', 'Logged in with Facebook');
  		}
-   
-   
+
+
        // print_r($adapter->getTokens());
       //  echo 'Welcome ' . $profile->firstName . ' '. $profile->lastName . '<br>';
       //  echo 'Your email: ' . $profile->email . '<br>';
@@ -148,6 +148,8 @@ Route::get('users/login/go', ['as' => 'gologin', 'uses'=> 'HomeController@loginW
 Route::get('/ajax/posts', array('uses'=>'HomeController@getPosts'));
 Route::get('/', array('uses'=>'HomeController@getIndex'));
 Route::controller('/', 'HomeController');
+
+
 
 
 //Route::get('/search/song', 'SongController@search');

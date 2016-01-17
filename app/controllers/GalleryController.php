@@ -1,11 +1,11 @@
 <?php
 class GalleryController extends BaseController
 {
- 
+
     public function getUpload()
     {
         if (Auth::check()) {
-          $user = Auth::user();      
+          $user = Auth::user();
           $g_count= $user->galleries()->count();
                 if ($g_count < 10 ) {
 
@@ -21,11 +21,11 @@ class GalleryController extends BaseController
         }
 
      }
-     
+
      public function getUpload2()
     {
         if (Auth::check()) {
-          $user = Auth::user();      
+          $user = Auth::user();
           $g_count= $user->galleries()->count();
                 if ($g_count < 10 ) {
 
@@ -44,7 +44,7 @@ class GalleryController extends BaseController
 
      public function getShow(Gallery $gallery)
     {
-         
+
         $id= $gallery->id;
       $cat= $gallery->cat;
       $reCats =  Gallery::where('cat', '=', $cat)->take(5)->orderBy('id','desc')->get();
@@ -53,7 +53,7 @@ class GalleryController extends BaseController
         ->with('gallery',$gallery)
         ->with('cat', $cat)
         ->with('reCats', $reCats);
-       
+
     }
 
      public function postCreate2()
@@ -79,20 +79,20 @@ class GalleryController extends BaseController
 
              if (Input::hasFile('image'))
              {
-        
+
             $image = Input::file('image');
             $filename = str_random(12);
             $extension = $image->getClientOriginalExtension();
             $name = $filename.'.'.$extension;
-           
-           
+
+
            $desPath= public_path('img/galleries/');
-           
-          
+
+
             $upload_success =$image->move($desPath,$name);
-            $pic->image ='img/galleries/'.$name; 
+            $pic->image ='img/galleries/'.$name;
             $pic->user()->associate(Auth::user());
-            $pic->save();   
+            $pic->save();
 
             return Redirect::to('/profile')
            ->with('notices', 'New Photos added!!!')
@@ -104,18 +104,18 @@ class GalleryController extends BaseController
           //         }
 
        }
-        
+
       	//  return Response::json(['error' => 'Error Uploading']);
         return Redirect::to('/gallery/upload')
         ->with('errors', $validator->messages());
-        
+
 	}
 	//return Response::json($validation->errors()->toArray());
         return Redirect::to('/gallery/upload')
         ->with('errors', $validator->messages());
 
     }
-    
+
     public function postCreate()
      {
         $photo = [
@@ -139,7 +139,7 @@ class GalleryController extends BaseController
             $pic->caption = $caption;
             $genre =Input::get('genre');
             $pic->cat =$genre;
-            
+
 
  	    $image = Input::file('image');
              if (isset($image))
@@ -152,25 +152,25 @@ class GalleryController extends BaseController
             $pic->image ='img/galleries/'.$name;
             $url='http://27colours.com/profile';
             }  else{
-          	 
+
        		 return Response::json(['error'=> 'Error Uploading picture']);
-            
+
             }
             	$pic->user()->associate(Auth::user());
-            	$pic->save();   
+            	$pic->save();
             	return Response::json(['name' => $name, 'url' => $url, 'caption'=>$caption, 'genre'=>$genre ], 200);
 
 
        }
-        
+
       	  return Response::json(['error' => 'Error Uploading']);
-     
+
 
     }
-    
-    
+
+
     public function postUploadp()
-     {	
+     {
      	//	$title=Input::get('title');
     	//	$file = Input::file('filedata');
 	//	$filename = str_random(16);
@@ -192,7 +192,7 @@ class GalleryController extends BaseController
 			return Response::json('error', 400);
 		}
 
-    
+
     }
 
     public function getEdit()
@@ -214,7 +214,7 @@ class GalleryController extends BaseController
 
         $validator = Validator::make($photo, $rules);
 
-        if ($validator->passes()) 
+        if ($validator->passes())
         {    */
        $gallery =new Gallery;
        $gallery->caption = Input::get('caption');
@@ -225,28 +225,28 @@ class GalleryController extends BaseController
         $extension = $file->getClientOriginalExtension();
         $name = $fileName.'.'.$extension;
 
-     
+
         $desPath= public_path('img/galleries/');
 
         $gallery->image = 'img/galleries/'.$name;
         $gallery->user()->associate(Auth::user());
         $gallery->save();
         $file->move($desPath,$name);
-        
+
          return Redirect::to('/profile')
          ->with('noticeg', 'New Photos added!!!');
      // $gallery->image = 'http://localhost:8060/public/img'.$name;
     //  }
     //  return Redirect::to('/editGallery')
-    //    ->with('errorg', $validator->messages());   
+    //    ->with('errorg', $validator->messages());
 
     }
-     
+
 
      public function postDelete()
      {
        $gallery= Gallery::find(Input::get('id'));
-         
+
         if ($gallery) {
             File::delete('img/galleries/'.$gallery->image);
              $gallery->delete();
@@ -258,8 +258,8 @@ class GalleryController extends BaseController
         	 return Redirect::to('/profile')
        		 ->with('errorg', 'Error deleting picture');
 
-      
-      
+
+
   }
 
 
@@ -267,10 +267,10 @@ class GalleryController extends BaseController
 public function search()
     {
         $search =Input::get('s-term');
-      
+
         $galleries= Gallery::search($search)->paginate(10);
 
-      
+
       $videos = Video::orderBy('id','desc')->paginate(10);
       $songs= Song::orderBy('id','desc')->paginate(10);
 
@@ -280,6 +280,6 @@ public function search()
      ->with('videos', $videos);
 
  }
- 
-  
+
+
 }

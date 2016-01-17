@@ -6,8 +6,8 @@ class VideoController extends BaseController
     public function getUpload()
     {
         if (Auth::check()) {
-        
-            $user = Auth::user();      
+
+            $user = Auth::user();
             $v_count= $user->videos()->count();
                 if ($v_count < 10 ) {
                      return View::make('video.video-upload');
@@ -26,7 +26,7 @@ class VideoController extends BaseController
 
     public function getShow(Video $video)
     {
-         
+
         $id= $video->id;
         $type= $video->video_type;
         $reVideos =  Video::where('video_type', '=', $type)->take(5)->orderBy('id','desc')->get();
@@ -35,7 +35,7 @@ class VideoController extends BaseController
         ->with('video',$video)
         ->with('type', $type)
         ->with('reVideos',$reVideos);
-       
+
     }
 
     function postArtCreate()
@@ -69,9 +69,9 @@ class VideoController extends BaseController
             $desPath=public_path('img/videos/');
             $upload_success =$vid->move($desPath,$name);
             $video->video ='img/videos/'.$name;
-            
+
                 if (! isset($video->video))
-                { 
+                {
                  return Redirect::to('/video/upload')
                 ->with('errorv', 'Problem with your video upload');
                 }
@@ -84,7 +84,7 @@ class VideoController extends BaseController
             return View::make('video.last-upload')
             ->with('video', $video)
             ->with('noticev', 'New video added!!! Complete the remaining details below');
-    
+
          }
         return Redirect::to('/video/upload')
         ->with('errorv', $validator->messages())
@@ -124,7 +124,7 @@ class VideoController extends BaseController
             $video->title = Input::get('title');
             $video->description=Input::get('description');
             $video->video_type=Input::get('genre');
-		
+
             $vid= Input::file('video');
             if(isset($vid))
             {
@@ -141,19 +141,19 @@ class VideoController extends BaseController
             $name = Str::random(6).'_'.$imag_name;
             $desPath= public_path('img/videos/images/');
             $upload_success =$imag->move($desPath, $name);
-            $video->image='img/videos/images/'.$name; 
+            $video->image='img/videos/images/'.$name;
             }
             if (! isset($vid) && ! isset($yvid) )
-                    { 
+                    {
                  return Redirect::to('/video/upload')
                 ->with('errors', 'Upload a Video directly OR Supply your soundcloud link');
                     }
             $video->user()->associate(Auth::user());
-            $video->save(); 
+            $video->save();
 
              return Redirect::to('/profile'.'#videos')
-             ->with('noticev', 'New video added!!!'); 
-            
+             ->with('noticev', 'New video added!!!');
+
          }
         return Redirect::to('/video/upload')
         ->with('errorv', $validator->messages())
@@ -194,26 +194,26 @@ class VideoController extends BaseController
             $filename = str_random(12);
             $desPath= public_path('img/videos/images');
             $upload_success =$image->move($desPath, $filename);
-            $video->song_art='img/videos/images'.$filename; 
+            $video->song_art='img/videos/images'.$filename;
             $video->user()->associate(Auth::user());
-            $video->save(); 
+            $video->save();
 
               return Redirect::to('/profile')
              ->with('noticev', 'New video added!!!');
-            
+
           }
         return Redirect::to('/video/upload')
         ->with('errorv', $validator->messages());
-       
+
 
     }
- 
+
     public function search()
     {
         $search =Input::get('s-term');
         $video= Video::search($search)->paginate(10);
 
-      
+
       $songs = Song::orderBy('id','desc')->paginate(10);
       $galleries= Gallery::orderBy('id','desc')->paginate(10);
 
@@ -221,8 +221,8 @@ class VideoController extends BaseController
      ->with('songs', $songs)
      ->with('galleries', $galleries)
      ->with('videos', $videos);
-     
-        
+
+
     }
 
      public function getEdit(Video $video)
@@ -230,7 +230,7 @@ class VideoController extends BaseController
         return View::make('profile.videos.edit')
         ->with('video', $video);
      }
- 
+
     public function delete(Video $video)
      {
         $user = Auth::user();
@@ -242,7 +242,7 @@ class VideoController extends BaseController
      public function postDelete()
      {
        $video=Video::findorfail(Input::get('id'));
-         
+
         if ($video) {
             File::delete('img/videos/'.$video->video);
             File::delete('img/videos/images/'.$video->image);
@@ -256,11 +256,11 @@ class VideoController extends BaseController
          return Redirect::to('/profile')
         ->with('errors', 'Error deleting video');
 
-      
+
   }
- 
-    
- 
+
+
+
     /* post functions */
     public function savePost()
     {
@@ -284,7 +284,7 @@ class VideoController extends BaseController
         else
             return Redirect::back()->withErrors($valid)->withInput();
     }
- 
+
     public function updatePost(Post $post)
     {
         $data = [
@@ -312,5 +312,5 @@ class VideoController extends BaseController
         else
             return Redirect::back()->withErrors($valid)->withInput();
     }
- 
+
 }
